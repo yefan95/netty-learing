@@ -14,7 +14,7 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 
 public class HttpFileServer {
 
-    private static final String DEFAULT_URL = "/src/main/java/cn.r2r.chapter10";
+    private static final String DEFAULT_URL = "/chapter10";
 
     public void run(int port,String host){
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -32,7 +32,7 @@ public class HttpFileServer {
                             ch.pipeline().addLast("http-aggregator",new HttpObjectAggregator(65536));
                             ch.pipeline().addLast("http-encoder",new HttpResponseEncoder());
                             ch.pipeline().addLast("http-chunked", new ChunkedWriteHandler());
-                            ch.pipeline().addLast("fileServerHandler", new HttpFileServerHandler());
+                            ch.pipeline().addLast("fileServerHandler", new HttpFileServerHandler(DEFAULT_URL));
                         }
                     });
 
